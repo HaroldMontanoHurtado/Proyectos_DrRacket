@@ -1,4 +1,0 @@
-#lang eopl
-(define especificacion-lexica
-  ()
-  )
