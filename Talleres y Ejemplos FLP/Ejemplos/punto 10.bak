@@ -1,0 +1,29 @@
+#lang eopl
+#| 10. (max-list lista) que recibe una lista de numeros y devuelve el
+numero mayor en dicha lista. |#
+
+;; Funcion pregunta si el primer elemento es mayor a los demas de la lista.
+(define aux-max
+  (lambda (elm lst)
+    (cond
+      [(null? lst) #t]
+      [(not (> elm (car lst))) ;;pregunta
+       (and
+        (> elm (car lst))
+        (aux-max elm (cdr lst))
+        )] ;;respuesta
+      [else (aux-max elm (cdr lst))]
+     )))
+
+;; Funcion que repite la funcion (aux-man) para cada elemento de la lista
+(define max-list
+  (lambda (lista)
+    (cond
+      [(null? lista) '()]
+      [(aux-max (car lista) (cdr lista))
+       (car lista)]
+      [else (max-list (cdr lista))]
+     )))
+
+(display (max-list '(12 4 21 11 8))) (display "\n")
+(display (max-list '(19 12 34 8 14 45)))  (display "\n")

@@ -1,0 +1,9 @@
+#lang eopl
+(define-datatype declaracion declaracion?
+  (decl-1 (a declaracion?)
+          (b declaracion?))
+  (decl-2 (exp expresion?)
+          (decl declaracion?))
+  (decl-3 (ide symbol?)
+          (exp expresion?))
+  )

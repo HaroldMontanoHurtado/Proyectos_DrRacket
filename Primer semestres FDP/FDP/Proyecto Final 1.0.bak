@@ -1,0 +1,183 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-advanced-reader.ss" "lang")((modname |Proyecto Final 1.0|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #t #t none #f () #f)))
+;PROYECTO FINAL
+;Teachpack
+(require 2htdp/batch-io)
+;Estructuras
+(define cantidadEjemplares (make-vector 1))
+(define-struct Libro (titulo autores lugarPublicacion añoPublicacion
+                             ISBN materias calificacion cantidadEjemplares))
+(define-struct estudiante (nombre programa codigo))
+(define-struct profesor (nombre cedula))
+(define-struct funcionario (nombre cedula dependenciaDeTrabajo))
+;-----------------------------------------------------------------
+(define (texto->num x)
+  (cond
+    [(number? x) x]
+    [(string-numeric? x) (string->number x)]
+    [else x]))
+(define (list-num lis)
+  (local [
+          (define (lis-n lst)
+            (cond
+              [(empty? lst) empty]
+              [(cons? lst) (cons (texto->num (first lst)) (lis-n (rest lst)))]
+              [else (lis-n (rest lst))]
+              ))
+          ]
+    (cond
+      [(empty? lis) empty]
+      [(cons? lis) (cons (lis-n (first lis)) (list-num (rest lis)))]
+      [else (list-num (rest lis))]
+     )))
+;-----------------------------------------------------------------
+(define (listaLibros lis)
+  (local [
+          (define (list->libro lis)
+            (if
+             (list? lis)
+             (make-Libro (texto->num (first lis)) ;titulo
+                         (texto->num (second lis)) ;autores
+                         (texto->num (third lis)) ;lugar de Publicacion
+                         (texto->num (fourth lis)) ;año de Publicacion
+                         (texto->num (fifth lis)) ;ISBN
+                         (texto->num (sixth lis)) ;materias
+                         (texto->num (seventh lis)) ;Calificacion
+                         (texto->num (eighth lis)) ;cantidad de Ejemplares
+                         )
+             (error "no es una lista tipo Libro")
+             ))
+          ]
+    (cond
+      [(empty? lis) empty]
+      [else
+       (local [
+               (define primero (first lis))
+               (define resto (rest lis))
+               (define estructuraLibro (list->libro primero))
+               (define recursion (listaLibros resto))
+               ]
+         (cond
+           [(cons? primero)
+            (cons estructuraLibro recursion)]
+           [else (cons primero recursion)]
+           )
+         )]
+      ))
+  )
+;-----------------------------------------------------------------
+(define (ingresar-estudiante lis)
+  (local [
+          (define (list->estudiante lis)
+            (if
+             (list? lis)
+             (make-estudiante (texto->num (first lis)) ;nombre
+                              (texto->num (second lis)) ;programa
+                              (texto->num (third lis)) ;codigo
+                              )
+             (error "no es una lista tipo estudiante")
+             ))
+          ]
+    (cond
+      [(empty? lis) empty]
+      [else
+       (local [
+               (define primero (first lis))
+               (define resto (rest lis))
+               (define estructuraEmpleados (list->estudiante primero))
+               (define recursion (ingresar-estudiante resto))
+               ]
+         (cond
+           [(cons? primero)
+            (cons estructuraEmpleados recursion)]
+           [else (cons primero recursion)]
+           )
+         )]
+      ))
+  )
+;-----------------------------------------------------------------
+(define (ingresar-profesor lis)
+  (local [
+          (define (list->profesor lis)
+            (if
+             (list? lis)
+             (make-profesor (texto->num (first lis)) ;nombre
+                            (texto->num (second lis)) ;cedula
+                            )
+             (error "no es una lista tipo estudiante")
+             ))
+          ]
+    (cond
+      [(empty? lis) empty]
+      [else
+       (local [
+               (define primero (first lis))
+               (define resto (rest lis))
+               (define estructuraProfesor (list->profesor primero))
+               (define recursion (ingresar-profesor resto))
+               ]
+         (cond
+           [(cons? primero)
+            (cons estructuraProfesor recursion)]
+           [else (cons primero recursion)]
+           )
+         )]
+      ))
+  )
+;------------------------------------------------------------------
+(define (ingresar-funcionario lis)
+  (local [
+          (define (list->funcionario lis)
+            (if
+             (list? lis)
+             (make-estudiante (texto->num (first lis)) ;nombre
+                              (texto->num (second lis)) ;cedula
+                              (texto->num (third lis)) ;dependencia De Trabajo
+                              )
+             (error "no es una lista tipo estudiante")
+             ))
+          ]
+    (cond
+      [(empty? lis) empty]
+      [else
+       (local [
+               (define primero (first lis))
+               (define resto (rest lis))
+               (define estructuraFuncionario (list->funcionario primero))
+               (define recursion (ingresar-funcionario resto))
+               ]
+         (cond
+           [(cons? primero)
+            (cons estructuraFuncionario recursion)]
+           [else (cons primero recursion)]
+           )
+         )]
+      ))
+  )
+;------------------------------------------------------------------
+(define (cargar-datos link-libros link-usuarios)
+  (list (listaLibros (read-words/line link-libros))
+        (local [
+                (define listaConvertida (list-num (read-words/line link-usuarios)))
+                (define (elegirUsuario listaConvertida)
+                  (cond
+                    [(eq? (length (first listaConvertida)) 2)
+                     (ingresar-profesor listaConvertida)]
+                    [(eq? (length (first listaConvertida)) 3)
+                     (cond
+                       [(number? (third (first listaConvertida)))
+                        (ingresar-estudiante listaConvertida)]
+                       [(string? (third (first listaConvertida)))
+                        (ingresar-funcionario listaConvertida)]
+                       )]
+                    ))
+                ]
+          (elegirUsuario listaConvertida)
+          )))
+                    
+;(cargar-datos "data/libros.txt" "data/usuarios.txt")
+;faltan 5 libros
+;(list-num (read-words/line "data/usuarios.txt"))
+;(cargar-datos "data/libros.txt" "data/usuarios.txt")
+;debo hacer que se recursione la funcion del link-usuarios, para que compare cada objeto dentro de la lista

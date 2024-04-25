@@ -1,0 +1,13 @@
+#lang eopl
+(define index 0)
+
+(define contar
+  (lambda () (set! index (+ 1 index)) )
+  )
+
+(define (bucle rango)
+  (let (
+        )
+    (display index) (display "\n")
+   )
+ )

@@ -1,0 +1,5 @@
+HVC-987 GTO California 15.4 137 39.2
+VCD-325 Camaro California 18.40 240 14.72
+DSR-456 Brera_2.2_JTS_Coupe California 18.40 222 24.89
+ZDE-439 147_1.6_Progression Washinton_DC 15.77 195 28.55
+ABE-070 147_1.6_Twin_Spark_Impression New_York 15.77 300 28.55

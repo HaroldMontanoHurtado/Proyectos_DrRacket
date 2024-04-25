@@ -1,0 +1,43 @@
+;; The first three lines of this file were inserted by DrRacket. They record metadata
+;; about the language level of this file in a form that our tools can easily process.
+#reader(lib "htdp-beginner-reader.ss" "lang")((modname |ejercicio 1 - opcional|) (read-case-sensitive #t) (teachpacks ()) (htdp-settings #(#t constructor repeating-decimal #f #t none #f () #f)))
+;;;Ejercicios 1
+;;;Procesamiento de datos simples
+;;Autor: Harold Montano
+;;Fecha: 1 de Dic, 2019
+;;Contrato: 
+;;Proposito:
+;;Ejemplos:
+;(define nombradoA (make-profe-nombrado 'Carlos 600000 16 'discretas 'ingles 'calculo))
+;(define nombradoB (make-profe-nombrado 'Daniel 845000 22 'ingles 'sociales 'español))
+;(define ocacionalA (make-profe-ocacional 'Valeria 467000 'calculo 'discretas 'ingles))
+;(define ocacionalB (make-profe-ocacional 'Andres 556000 'sociales 'español 'historia))
+;(define catedraA (make-profe-catedra 'Javier 10000 'calculo 'discretas 'ingles))
+;(define catedraB (make-profe-catedra 'Dora 23000 'ingles 'español 'historia))
+;'calculo 'ingles 'español
+;'discretas 'historia 'sociales
+
+;;Definición:
+
+(define-struct profe-nombrado
+  (nombre salario horaadmin asig1 asig2 asig3)
+ )
+(define-struct profe-ocasional
+  (nombre salario asig1 asig2 asig3)
+ )
+(define-struct profe-catedra
+  (nombre valor-hora asig1 asig2 asig3)
+ )
+(define-struct asignatura
+  (nombre numEstudiantes numHoras)
+ )
+
+(define calculo (make-asignatura calculo 9 8))
+(define discretas (make-asignatura discretas 12 7))
+(define ingles (make-asignatura ingles 16 7))
+(define español (make-asignatura español 14 5))
+(define historia (make-asignatura historia 10 4))
+(define sociales (make-asignatura sociales 15 6))
+
+
+

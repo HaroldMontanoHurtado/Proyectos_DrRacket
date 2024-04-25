@@ -1,0 +1,16 @@
+#lang eopl
+(define funLambda
+  (lambda (x y) (* x y))
+  )
+
+(display (funLambda 3 4))
+
+; (if <quest> <respuesta_t> <respuesta_f>)
+(define funToF
+  (lambda (a b c)
+    (if
+     (> a b)
+     a
+     c)
+    )
+  )

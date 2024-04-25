@@ -1,0 +1,5 @@
+WBC-896 147_1.6_T_Spark_Eco_Impression Cali 16.56 180 16.56
+ABC-561 147_GTA Bogota 16.56 230 12.94
+ZWQ-760 156_2.5_V6_24V_Sportwagon Bogota 16.56 230 19.83
+KLE-902 75_2.0_Turbo_Diesel Medellin 12.89 175 26.01
+BHU-451 Alfasud_Ti Medellin 13.14 500 13.14
